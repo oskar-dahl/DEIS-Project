@@ -6,6 +6,8 @@
 #IN NO EVENT WILL THE COPYRIGHT OWNER BE LIABLE FOR ANY DAMAGES
 #ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE.
 
+# NOT USED IN FINAL VERSION
+
 import rospy
 import numpy as np
 from std_msgs.msg import String

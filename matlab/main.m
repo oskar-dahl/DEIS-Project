@@ -2,16 +2,18 @@
 % DEIS-Project
 % Copyright � 2018 Fredrik Johansson & Oskar Dahl. All rights reserved.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Main code controlling the robot. Basically a long state machine.
+% Main code controlling the robot. Basically a long a** state machine, not pretty at all. Be warned.
 
 clear all; clc; close all; rosshutdown;
 
+% Path to matlab functions.
 addpath('/Users/fredrik/Desktop/DEIS-Project/matlab/functions/');
 savepath;
 
-% Launch GUI
+% Launch the GUI
 gui = ctrlGUI;
 
+% Some global flags
 global pubFlag;
 global A_STATE;
 global M_STATE;
@@ -20,6 +22,7 @@ global spd_l;
 global spd_r;
 global gps;
 
+% More flags and settings
 pubFlag = 0;
 A_STATE = 0;
 M_STATE = 0;
@@ -43,9 +46,11 @@ setenv('ROS_MASTER_URI','http://192.168.1.8:11311');
 setenv('ROS_IP','192.168.1.25');
 rosinit();
 
+% We want to publish messages to both robots.
 [pubCtrlJ, ctrlMsgJ] = rospublisher('g5_ctrl_channel_jerry','std_msgs/String');
 [pubCtrlT, ctrlMsgT] = rospublisher('g5_ctrl_channel_tom','std_msgs/String');
 
+% GPS channel
 subGPS = rossubscriber('/josefoutput', 'std_msgs/String', @gpsCB);
 
 %{
@@ -57,16 +62,17 @@ urlwrite(url,img_file,'Authentication','Basic','Username',user,'Password',pass);
 imrgb = imread('image_cam.jpg');
 %}
 
+% Main loop
 run = true;
 while run
     pubFlag
-    if LEADER == 1
+    if LEADER == 1 % If set, switch leader.
         if strcmp(leader,'Jerry')
             leader = 'Tom';
         elseif strcmp(leader,'Tom')
             leader = 'Jerry';
         end
-        LEADER = 0;
+        LEADER = 0; % Reset flag
     end
     
     if gps(5,1) ~= -1
@@ -88,7 +94,7 @@ while run
         end
         
         if M_STATE == 0 % Following state
-            d = pdist([jerryPos; tomPos],'euclidean');
+            d = pdist([jerryPos; tomPos],'euclidean'); % Distance between the robots.
             PIDVal = floor(pidDist(0.5, (d-60)));
         elseif M_STATE == 1 % Side-by-side state
             pubFlag = 2;

@@ -2,6 +2,8 @@
 # USAGE
 # python detect_color.py --image example_shapes.png
 
+# NOT USED IN FINAL VERSION
+
 # import the necessary packages
 from pyimagesearch.shapedetector import ShapeDetector
 from pyimagesearch.colorlabeler import ColorLabeler

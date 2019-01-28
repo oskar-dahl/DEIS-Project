@@ -3,6 +3,8 @@
 #Copyright (c) 2018, Fredrik Johansson, Oskar Dahl
 #All rights reserved.
 
+# NOT USED IN FINAL VERSION
+
 import rospy
 import numpy as np
 from std_msgs.msg import String

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# NOT USED IN FINAL VERSION
+
 import rospy
 #import numpy as np
 from robot_msgs.msg import sensorData

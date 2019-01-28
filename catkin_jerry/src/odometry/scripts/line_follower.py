@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # Line follower
+# NOT USED IN FINAL VERSION
 
 import rospy
 import numpy as np

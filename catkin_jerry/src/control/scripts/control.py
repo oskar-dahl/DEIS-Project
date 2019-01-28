@@ -11,6 +11,7 @@ ctrlMsg = ctrlData()
 pub = rospy.Publisher('g5_arduino_ctrl_channel_jerry', ctrlData, queue_size=1)
 # pub = rospy.Publisher('g5_arduino_ctrl_channel_tom', ctrlData, queue_size=1)
 
+# Receive message
 def callback(data):
 
     splitData = [x.strip() for x in data.data.split(', ')]
@@ -22,6 +23,7 @@ def callback(data):
 
     pub.publish(ctrlMsg)
 
+# Publish to arduino
 def control():
 	rospy.init_node('g5_control_node', anonymous=True)
 	rospy.Subscriber('g5_ctrl_channel_jerry', String, callback)

@@ -36,6 +36,8 @@
 ## Simple talker demo that listens to std_msgs/Strings published 
 ## to the 'chatter' topic
 
+# NOT USED IN FINAL VERSION
+
 import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Image

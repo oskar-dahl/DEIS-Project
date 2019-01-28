@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# NOT USED IN FINAL VERSION
+
 import math
 
 def euclideanDistance(vector1, vector2):
