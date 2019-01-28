@@ -140,6 +140,7 @@ void stateMachine()
         motors.brake();
         break;
       case LINEFOLLOWER:
+        // Read IR sensors
         sensors[1] = (sensorCenter.read() > LINETHRESHOLD);
         sensors[2] = (sensorRight.read() > LINETHRESHOLD);
         sensors[0] = (sensorLeft.read() > LINETHRESHOLD);
@@ -162,24 +163,25 @@ void stateMachine()
 
         break;
       case CHANGELINELEFT:
-        motors.pivot(70, 700);
+        motors.pivot(70, 700); // Turn left
         state = DRIVETOLINELEFT;
 
         break;
       case CHANGELINERIGHT:
-        motors.pivot(-70, 700);
+        motors.pivot(-70, 700); // Turn right
         state = DRIVETOLINERIGHT;
 
         break;
       case DRIVETOLINELEFT:
 
+        // Read IR sensors
         sensors[1] = (sensorCenter.read() > LINETHRESHOLD);
         sensors[2] = (sensorRight.read() > LINETHRESHOLD);
         sensors[0] = (sensorLeft.read() > LINETHRESHOLD);
   
         if(sensors[0] == 1 || sensors[1] == 1 || sensors[2] == 1){
-          motors.drive(70, 500);
-          motors.pivot(-70, 700);
+          motors.drive(70, 500); // Turn left
+          motors.pivot(-70, 700); // Turn right
           state = LINEFOLLOWER;
         }else{
           motors.drive(80);
@@ -187,13 +189,14 @@ void stateMachine()
         break;
       case DRIVETOLINERIGHT:
 
+        // Read IR sensors
         sensors[1] = (sensorCenter.read() > LINETHRESHOLD);
         sensors[2] = (sensorRight.read() > LINETHRESHOLD);
         sensors[0] = (sensorLeft.read() > LINETHRESHOLD);
   
         if(sensors[0] == 1 || sensors[1] == 1 || sensors[2] == 1){
           motors.drive(70, 500);
-          motors.pivot(70, 700);
+          motors.pivot(70, 700); // Turn left
           state = LINEFOLLOWER;
         }else{
           motors.drive(80);
@@ -214,6 +217,7 @@ ros::Subscriber<robot_msgs::ctrlData> sub("g5_arduino_ctrl_channel_tom", &ctrl )
 #endif
 #endif
 
+// Init.
 void setup() {
   
     #ifdef ROS
@@ -230,8 +234,10 @@ void setup() {
 
 }
 
+// Main loop
 void loop() {
 
+    // Run state machine.
     stateMachine();
    
     #ifdef ROS
